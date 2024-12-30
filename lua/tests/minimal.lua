@@ -10,7 +10,7 @@ else
 end
 
 require("lazy.minit").setup {
-  headless = { log = false },
+  headless = { process = false, log = false },
   spec = {
     { 'nvim-telescope/telescope.nvim', opts = {} },
     { 'nvim-lua/plenary.nvim',         lazy = true },
