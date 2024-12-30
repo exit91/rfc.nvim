@@ -1,3 +1,5 @@
+![CI workflow](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+
 # rfc.nvim
 
 Browse your favorite RFC's, preview them and open them up on a vim buffer.
