@@ -1,6 +1,6 @@
-name: Ci
+name: Tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   lint:
@@ -39,26 +39,18 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        rev: [nightly]
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - uses: rhysd/action-setup-vim@v1
         id: vim
         with:
           neovim: true
-          version: nightly
+          version: ${{ matrix.rev }}
 
-      - name: luajit
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "luajit-openresty"
-
-      - name: luarocks
-        uses: leafo/gh-actions-luarocks@v4
-
-      - name: run test
-        shell: bash
+      - name: run tests
         run: |
-          luarocks install luacheck
-          luarocks install vusted
-          vusted ./test
-sted ./test
+          nvim --version
+          make test

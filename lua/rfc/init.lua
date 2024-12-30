@@ -6,7 +6,9 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
-return function(_, opts)
+local M = {}
+
+function M.picker(_, opts)
   opts = opts or {}
 
   local response = curl.get("https://www.ietf.org/rfc/rfc-ref.txt", { compressed = true })
@@ -69,3 +71,5 @@ return function(_, opts)
     end,
   }):find()
 end
+
+return M

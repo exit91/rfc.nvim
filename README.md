@@ -57,6 +57,6 @@ require('telescope').load_extension('rfc')
 --or--
 
 "Using lua function
-_TODO_: lua require('telescope').extensions.rfc()<cr>
+lua require('telescope').extensions.rfc.rfc()<cr>
 
 ```

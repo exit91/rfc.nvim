@@ -1,6 +1,6 @@
-return require("telescope").register_extension {
-  ---@diagnostic disable-next-line: unused-local
-  setup = function(ext_config, _config)
-  end,
-  exports = { rfc = require("rfc") },
+local rfc = require "rfc"
+local telescope = require "telescope"
+
+return telescope.register_extension {
+  exports = { rfc = rfc.picker },
 }
