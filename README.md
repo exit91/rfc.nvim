@@ -1,4 +1,4 @@
-![CI workflow](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+![CI workflow](https://github.com/moniquelive/rfc.nvim/actions/workflows/ci.yml/badge.svg)
 
 # rfc.nvim
 
