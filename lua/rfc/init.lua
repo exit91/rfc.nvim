@@ -30,9 +30,8 @@ M.picker = function(_, opts)
   local conf = require("telescope.config").values
   -- local state = require "telescope.state"
   local actions = require "telescope.actions"
-  -- local action_state = require "telescope.actions.state"
+  local action_state = require "telescope.actions.state"
 
-  opts.content = {}
   opts.entry_maker = opts.entry_maker or function(entry)
     local p = M.parse_line(entry)
     if not p then return end
@@ -53,9 +52,6 @@ M.picker = function(_, opts)
         pv_utils.job_maker(M.get_rfc(entry.value), self.state.bufnr, {
           bufname = self.state.bufname,
           value = entry.value,
-          callback = function( --[[bufnr]] _, content)
-            opts.content = content
-          end
         })
       end,
     },
@@ -63,7 +59,7 @@ M.picker = function(_, opts)
     attach_mappings = function(prompt_bufnr, --[[map]] _)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
-        -- local selection = action_state.get_selected_entry()
+        local selection = action_state.get_selected_entry()
 
         local bufnr = vim.api.nvim_create_buf(false, true)
         local width = 80
@@ -75,16 +71,21 @@ M.picker = function(_, opts)
           { relative = 'win', row = 1, col = col, width = width, height = nlines })
         vim.api.nvim_win_set_buf(win, bufnr)
         vim.api.nvim_set_current_win(win)
-
-        -- paste contents in
-        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, opts.content)
-
-        -- window and buffer local opts
         vim.wo[win].number = false
-        vim.bo[bufnr].modifiable = false
 
-        -- use 'q' to close the popup
-        vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = bufnr })
+        local function init_buffer(lines)
+          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+          vim.bo[bufnr].modifiable = false
+          vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = bufnr })
+        end
+
+        local Job = require "plenary.job"
+        ---@diagnostic disable-next-line: missing-fields
+        Job:new({
+          command = "curl",
+          args = M.get_rfc(selection.value),
+          on_exit = vim.schedule_wrap(function(j) init_buffer(j:result()) end),
+        }):start()
       end)
       return true
     end,
