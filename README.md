@@ -12,7 +12,6 @@ Browse your favorite RFC's, preview them and open them up on a vim buffer.
 {
     "moniquelive/rfc.nvim",
     dependencies = {
-        "nvim-lua/plenary.nvim" ,
         "nvim-telescope/telescope.nvim" ,
     },
     config = function()
@@ -28,7 +27,6 @@ Browse your favorite RFC's, preview them and open them up on a vim buffer.
 use {
     "moniquelive/rfc.nvim",
     requires = {
-        { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope.nvim" },
     },
 }
@@ -39,7 +37,6 @@ use {
 
 ```viml
 Plug 'moniquelive/rfc.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 ```
