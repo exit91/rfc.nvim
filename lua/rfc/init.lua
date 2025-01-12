@@ -73,18 +73,19 @@ M.picker = function(_, opts)
         vim.api.nvim_set_current_win(win)
         vim.wo[win].number = false
 
-        local function init_buffer(lines)
-          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-          vim.bo[bufnr].modifiable = false
-          vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = bufnr })
-        end
+        local args = M.get_rfc(selection.value)
+        local command = table.remove(args, 1)
 
         local Job = require "plenary.job"
         ---@diagnostic disable-next-line: missing-fields
         Job:new({
-          command = "curl",
-          args = M.get_rfc(selection.value),
-          on_exit = vim.schedule_wrap(function(j) init_buffer(j:result()) end),
+          command = command,
+          args = args,
+          on_exit = vim.schedule_wrap(function(j)
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, j:result())
+            vim.bo[bufnr].modifiable = false
+            vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = bufnr })
+          end),
         }):start()
       end)
       return true
