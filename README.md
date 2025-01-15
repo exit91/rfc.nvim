@@ -4,6 +4,8 @@
 
 Browse your favorite RFC's, preview them and open them up on a vim buffer.
 
+![Screenshot](screenshot.png)
+
 ### Installation
 
 #### Lazy
