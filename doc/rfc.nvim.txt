@@ -1,5 +1,4 @@
 *rfc.nvim*     Telescope plugin for browsing (and reading) RFCs
-*rfc.nvim*
 
 Author:  Monique Oliveira <https://github.com/moniquelive>
 License: MIT License
