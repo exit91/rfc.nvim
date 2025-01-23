@@ -62,6 +62,7 @@ M.picker = function(_, opts)
         local selection = action_state.get_selected_entry()
 
         local bufnr = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_buf_set_option(bufnr, "filetype", "rfc")
 
         -- create a floating window
         local win = vim.api.nvim_get_current_win()
