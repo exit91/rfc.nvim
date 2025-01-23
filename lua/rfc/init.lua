@@ -62,16 +62,10 @@ M.picker = function(_, opts)
         local selection = action_state.get_selected_entry()
 
         local bufnr = vim.api.nvim_create_buf(false, true)
-        local width = 80
-        local col = (vim.o.columns - width) / 2
-        local nlines = vim.o.lines - 4
 
         -- create a floating window
-        local win = vim.api.nvim_open_win(bufnr, false,
-          { relative = 'win', row = 1, col = col, width = width, height = nlines })
+        local win = vim.api.nvim_get_current_win()
         vim.api.nvim_win_set_buf(win, bufnr)
-        vim.api.nvim_set_current_win(win)
-        vim.wo[win].number = false
 
         local args = M.get_rfc(selection.value)
         local command = table.remove(args, 1)
